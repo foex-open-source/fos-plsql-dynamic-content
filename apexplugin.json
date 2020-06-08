@@ -2,6 +2,12 @@
     "name":"FOS - PL\/SQL Dynamic Content"
    ,"version":"20.1.0"
    ,"description":"\u003Cp\u003EDisplays the HTML output from the PL\/SQL code.\u003C\/p\u003E\r\n\u003Cp\u003EThis region type differs from the native \"PL\/SQL Dynamic Content\" region in that it is refreshable.\u003C\/p\u003E"
+   ,"keywords":[
+        "plsql"
+       ,"dynamic"
+       ,"content"
+       ,"refresh"
+    ]
    ,"license":"MIT"
    ,"homepage":"https:\/\/foex.at\/fos"
    ,"author":{
@@ -12,7 +18,7 @@
     }
    ,"repository":{
         "type":"git"
-       ,"url":"https:\/\/github.com\/foex-open-source\/.git"
+       ,"url":"https:\/\/github.com\/foex-open-source\/fos-plsql-dynamic-content.git"
     }
    ,"oracle":{
         "versions":[
@@ -30,7 +36,7 @@
            ,"plugin":{
                 "internalName":"COM.FOS.PLSQL_DYNAMIC_CONTENT"
                ,"type":"region"
-               ,"demo":"https:\/\/fos.world\/ords\/f?p=1000:"
+               ,"demo":"https:\/\/fos.world\/ords\/f?p=1000:3020"
                ,"previewImage":"https:\/\/fos.world\/ords\/fos_master_ws\/fos-image\/COM.FOS.PLSQL_DYNAMIC_CONTENT"
             }
         }
