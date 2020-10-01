@@ -2,7 +2,7 @@
 
 {
     "name":"FOS - PL\/SQL Dynamic Content"
-   ,"version":"20.1.0"
+   ,"version":"20.1.1"
    ,"description":"An enhanced PL\/SQL Dynamic Content region with extra support for refreshing, lazy loading, spinners and more.\r\n\u003Ch4\u003EFree Plug-in under MIT License\u003C\/h4\u003E\r\n\u003Cp\u003E\r\nAll FOS plug-ins are released under MIT License, which essentially means it is free for everyone to use, no matter if commercial or private use. \r\n\u003C\/p\u003E\r\n\u003Ch4\u003EOverview\u003C\/h4\u003E\r\n\u003Cp\u003E\r\n    The \u003Cstrong\u003EFOS - PL\/SQL Dynamic Content\u003C\/strong\u003E plug-in is a refreshable region where you can output any HTML code using \u0027sys.htp.p\u0027 calls. It supports Lazy Loading, Lazy Refresh, can show loading spinner and mask, and gives you before\/after refresh events to hook into.\r\n\u003C\/p\u003E\r\n\u003Cp\u003E\r\n    Using this plug-in you have complete control of the HTML output. \r\n\u003C\/p\u003E"
    ,"keywords":[
         "plsql"
