@@ -1,5 +1,3 @@
-
-
 /* globals apex,$ */
 
 var FOS = window.FOS || {};
@@ -10,29 +8,32 @@ FOS.region = FOS.region || {};
  * This function must be run for the region to subscribe to the refresh event
  * Input parameter is an object with the following attributes:
  *
- * @param {object}  config                         Configuration object holding all attributes
- * @param {string}  config.ajaxIdentifier          Ajax Identifier needed by apex.server.plugin
- * @param {string}  config.regionId                The main region id. The region on which "refresh" can be triggered
- * @param {string}  config.regionWrapperId         Id of wrapper region. The contents of this element will be replaced with the new content
- * @param {string}  [config.itemsToSubmit]         Comma-separated page item names in jQuery selector format
- * @param {boolean} [config.suppressChangeEvent]   If there are page items to be returned, this decides whether to trigger a change event or not
- * @param {boolean} [config.showSpinner]           Shows a spinner or not
- * @param {boolean} [config.showSpinnerOverlay]    Depends on showSpinner. Adds a translucent overlay behind the spinner
- * @param {string}  [config.spinnerPosition]       Depends on showSpinner. A jQuery selector unto which the spinner will be shown
+ * @param {object}   config                         Configuration object holding all attributes
+ * @param {string}   config.ajaxIdentifier          Ajax Identifier needed by apex.server.plugin
+ * @param {string}   config.regionId                The main region id. The region on which "refresh" can be triggered
+ * @param {string}   config.regionWrapperId         Id of wrapper region. The contents of this element will be replaced with the new content
+ * @param {string}   [config.itemsToSubmit]         Comma-separated page item names in jQuery selector format
+ * @param {boolean}  [config.suppressChangeEvent]   If there are page items to be returned, this decides whether to trigger a change event or not
+ * @param {boolean}  [config.showSpinner]           Shows a spinner or not
+ * @param {boolean}  [config.showSpinnerOverlay]    Depends on showSpinner. Adds a translucent overlay behind the spinner
+ * @param {string}   [config.spinnerPosition]       Depends on showSpinner. A jQuery selector unto which the spinner will be shown
+ * @param {boolean}  [config.sanitizeContent]       Whether to pass the content through DOMPurify
+ * @param {object}   [config.DOMPurifyConfig]       Additional options to be passed to DOMPurify. Sanitize Content must be enabled.
+ * @param {string}   [config.initialContent]        The initial content to be applied shown if sanitizeContent is enabled and lazyLoad is disabled
+ * @param {function} initFn                         Initialization JavaScript Function to change the configuration at run-time
  */
 FOS.region.plsqlDynamicContent = function (config, initFn) {
 
     var pluginName = 'FOS - PL/SQL Dynamic Content';
     apex.debug.info(pluginName, config, initFn);
 
+    var context = this, el$;
+    el$ = config.el$ = $('#' + config.regionId);
+
     // Allow the developer to perform any last (centralized) changes using Javascript Initialization Code
     if (initFn instanceof Function) {
         initFn.call(context, config);
     }
-
-    var context = this, el$;
-
-    el$ = config.el$ = $('#' + config.regionId);
 
     //implementing the apex.region interface in order to respond to refresh events
     apex.region.create(config.regionId, {
@@ -58,6 +59,11 @@ FOS.region.plsqlDynamicContent = function (config, initFn) {
             }
         }
     });
+
+    if(config.sanitizeContent && config.initialContent){
+        var content = DOMPurify.sanitize(config.initialContent, config.DOMPurifyConfig || {});
+        $('#' + config.regionWrapperId).html(content);
+    }
 
     // check if we need to lazy load the region
     if (config.lazyLoad) {
@@ -125,7 +131,11 @@ FOS.region.plsqlDynamicContent.refresh = function (config) {
                 }
             }
             //replacing the old content with the new
-            $('#' + config.regionWrapperId).html(data.content);
+            var content = data.content;
+            if(config.sanitizeContent){
+                content = DOMPurify.sanitize(content, config.DOMPurifyConfig || {});
+            }
+            $('#' + config.regionWrapperId).html(content);
             // trigger our after refresh event(s)
             apex.event.trigger('apexafterrefresh', '#' + config.regionId, config);
         },
@@ -133,6 +143,4 @@ FOS.region.plsqlDynamicContent.refresh = function (config) {
         dataType: 'json'
     });
 };
-
-
 

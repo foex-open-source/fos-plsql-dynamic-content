@@ -1,5 +1,3 @@
-
-
 create or replace package com_fos_plsql_dynamic_content
 as
 
@@ -18,7 +16,5 @@ as
 
 end;
 /
-
-
 
 
