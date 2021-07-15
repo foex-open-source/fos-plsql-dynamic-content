@@ -24,11 +24,11 @@ as
     l_chunk  varchar2(32767);
 begin
     while apex_string.next_chunk
-        ( p_str    => p_clob
-        , p_chunk  => l_chunk
-        , p_offset => l_offset
-        , p_amount => 32767
-        )
+            ( p_str    => p_clob
+            , p_chunk  => l_chunk
+            , p_offset => l_offset
+            , p_amount => 30000 -- can't use 32767 b/c of multibyte characters; if using many multibyte characters, you need to turn this even lower
+            )
     loop
        sys.htp.prn(l_chunk);
     end loop;
@@ -204,7 +204,7 @@ as
 
     -- resulting content
     l_content                 clob                       := '';
-    l_buffer                  varchar2(32000);
+    l_buffer                  varchar2(32767);
 
     l_return                  apex_plugin.t_region_ajax_result;
 
