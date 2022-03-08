@@ -83,7 +83,7 @@ as
     c_data_variable         varchar2(4000)             := 'R' || p_region.id || '_DATA';
 begin
     -- standard debugging intro, but only if necessary
-    if apex_application.g_debug
+    if apex_application.g_debug and substr(:DEBUG,6) >= 6
     then
         apex_plugin_util.debug_region
           ( p_plugin => p_plugin
@@ -231,7 +231,7 @@ as
     --
 begin
     -- standard debugging intro, but only if necessary
-    if apex_application.g_debug
+    if apex_application.g_debug and substr(:DEBUG,6) >= 6
     then
         apex_plugin_util.debug_region
           ( p_plugin => p_plugin
@@ -304,6 +304,8 @@ begin
     end if;
 
     apex_json.close_object;
+
+    --htp_p_clob(l_content);
 
     return l_return;
 end ajax;
